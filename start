@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Cleanly kill supervisor when container is stopped
+trap 'kill $(jobs -p)' EXIT
+
+if [ -z "$MEMSIZE" ]; then
+    export MEMSIZE=64M
+fi
+
+if [ ! -f /etc/varnish/secret ]; then
+    if [ -z "$SECRET" ]; then
+        SECRET=`cat /proc/sys/kernel/random/uuid`
+    fi
+    echo $SECRET > /etc/varnish/secret
+fi
+
+echo "Secret is `cat /etc/varnish/secret`"
+varnishd -C -f /etc/varnish/default.vcl > /dev/null || exit 1
+
+supervisord
