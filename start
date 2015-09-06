@@ -3,18 +3,27 @@
 # Cleanly kill supervisor when container is stopped
 trap 'kill $(jobs -p)' EXIT
 
+# Set default varnish memory cache size if not specified
 if [ -z "$MEMSIZE" ]; then
     export MEMSIZE=64M
 fi
 
+# Set varnish secret if not specified
 if [ ! -f /etc/varnish/secret ]; then
     if [ -z "$SECRET" ]; then
         SECRET=`cat /proc/sys/kernel/random/uuid`
     fi
     echo $SECRET > /etc/varnish/secret
 fi
+echo "Secret is $SECRET"
 
-echo "Secret is `cat /etc/varnish/secret`"
+# Set access syslog host if not specified
+if [ -z "$LOGHOST" ]; then
+    LOGHOST=`ip route | grep default | awk '{print $3}'`
+fi
+sed -i -E "s/@.+/@$LOGHOST/" /etc/rsyslog.d/varnishlog.conf
+
+# Check vcl syntax
 varnishd -C -f /etc/varnish/default.vcl > /dev/null || exit 1
 
 supervisord

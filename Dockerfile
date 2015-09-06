@@ -13,6 +13,9 @@ RUN chmod +x /start ;\
     rm /etc/varnish/secret
 
 ADD varnish.conf /etc/supervisor/conf.d/varnish.conf
+ADD varnishlogger.conf /etc/supervisor/conf.d/varnishlogger.conf
+ADD varnishlog.conf /etc/rsyslog.d/varnishlog.conf
+ADD rsyslogd.conf /etc/supervisor/conf.d/rsyslogd.conf
 ADD supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 
 WORKDIR /etc/varnish

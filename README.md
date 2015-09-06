@@ -17,3 +17,5 @@ Container for running [Varnish Cache](https://www.varnish-cache.org/). Automatic
 *Extras*
 
 * test.vcl - example default.vcl file
+* monitorvcl - example showing how reload varnish when the vcl is modified
+* Apache-format logs are sent to the docker host with rsyslog with programname 'varnish', channel local6.notice

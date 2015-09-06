@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Wait for the vcl to be modified then tell varnish to reload
+while inotifywait -qq --event modify /etc/varnish/default.vcl; do
+  pkill -HUP varnishd
+done
