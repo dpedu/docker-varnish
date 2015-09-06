@@ -12,6 +12,7 @@ Container for running [Varnish Cache](https://www.varnish-cache.org/). Automatic
 
 * Set memory size: `docker run` with `-e MEMSIZE=128m`
 * Use pre-set secret: `-e SECRET=7d40f8f1-9107-4cce-a2b6-f5caf6fc7b9d`
+* Set custom syslog target remote host: `-e LOGHOST=10.0.40.28`
 * Expose control terminal: `-p 1234:6082`
 
 *Extras*
