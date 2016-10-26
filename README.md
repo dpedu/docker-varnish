@@ -10,14 +10,10 @@ Container for running [Varnish Cache](https://www.varnish-cache.org/).
 
 *Advanced*
 
-* Set memory size - append: `-s malloc,256M`
-* Set a secret - mount `-v /path/to/file/containg/uuid:/etc/varnish/secret`
+* Set memory size: `-e MEMSIZE=64M`
+* Set a secret: `-e SECRET=00000000-0000-0000-0000-000000000000`
 * Expose control terminal: `-p 1234:6082`
 
 *Extras*
 
 * test.vcl - example default.vcl file
-
-*Notes*
-
-The default secret is `00000000-0000-0000-0000-000000000000`. This is INSECURE if you decide to expose the varnish control terminal.
